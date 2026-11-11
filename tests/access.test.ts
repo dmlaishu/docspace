@@ -1,0 +1,2 @@
+import {describe,it,expect} from 'vitest';import {canRead,canEdit,canShare,validateTitle,validateContent} from '../lib/access';
+describe('permissions',()=>{it('prevents viewers from editing',()=>{expect(canRead('viewer')).toBe(true);expect(canEdit('viewer')).toBe(false);expect(canShare('editor')).toBe(false);expect(canShare('owner')).toBe(true)});it('rejects invalid document input',()=>{expect(()=>validateTitle('')).toThrow();expect(()=>validateContent('x'.repeat(200001))).toThrow()})});
