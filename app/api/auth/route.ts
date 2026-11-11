@@ -1,0 +1,2 @@
+import {NextResponse} from 'next/server';import {USERS,sign} from '@/lib/auth';
+export async function POST(req:Request){const {userId}=await req.json();if(!USERS.some(u=>u.id===userId))return NextResponse.json({error:'Invalid user'},{status:400});const res=NextResponse.json({userId});res.cookies.set('docspace_session',sign(userId),{httpOnly:true,sameSite:'lax',secure:process.env.NODE_ENV==='production',path:'/'});return res}
