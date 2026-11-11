@@ -1,0 +1,2 @@
+import {db} from './db';import type {Role} from './access';
+export async function roleFor(documentId:string,userId:string):Promise<Role>{const sql=db();const rows=await sql`select case when d.owner_id=${userId} then 'owner' else s.role end as role from documents d left join shares s on s.document_id=d.id and s.user_id=${userId} where d.id=${documentId} and (d.owner_id=${userId} or s.user_id=${userId})`;return (rows[0]?.role as Role)??null}
